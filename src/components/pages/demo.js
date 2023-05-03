@@ -674,10 +674,10 @@ const LandingScreen = (props) => {
   };
   // console.log("top50", Playersdata.slice(0, 50));
 
-  // new part
-  let pers = useRef("");
-  let players = useRef("");
-  var myPrice;
+  // new part --Hitesh's code
+  // let pers = useRef("");
+  // let players = useRef("");
+  // var myPrice;
   let [tour, setTour] = useState([]);
   const [tourcng, setTourcng] = useState("");
   const [wincng, setWindowcng] = useState("");
@@ -693,7 +693,7 @@ const LandingScreen = (props) => {
   let [playerslistData, setPlayerslistdata] = useState([]);
   const [updateprice, setUpdatePrice] = useState('');
   const [id,setId]=useState('')
-  const [ShowPrice,setShowPrice]=useState(false)
+  // const [ShowPrice,setShowPrice]=useState(false)
   const [home_List, setHome_List] = useState(true);
   const [tour_List, setTour_List] = useState(false);
   const [event_List, setEvent_List] = useState(false);
@@ -706,16 +706,15 @@ const LandingScreen = (props) => {
   let [eventLogic, setEventLogic] = useState([]);
   let [newLogic, setNewLogic] = useState([]);
 
-  const { start, end } = Player_count;
+  // const { start, end } = Player_count;
 
-  var mywindows = [];
-  var Playername = [];
-  var displayPlayersname = [];
+  // var mywindows = [];
+  // var Playername = [];
   var player;
+  //player is a dependecy of useEeffect hook
+  // var displayPlayersname = [];
   var result;
-  //player is a dependecy of useEefect hook
-  var persData;
-  // const [loading, setLoading] = useState(false);
+  // var persData;
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -723,11 +722,9 @@ const LandingScreen = (props) => {
     }, 1000);
   }, []);
 
-  // console.log("windows7",mywindows)
 
-  const [windows, setWindows] = useState([]);
+  // const [windows, setWindows] = useState([]);
 
-  // console.log("json", jsonResult)
   useEffect(() => {
     const getdata = async () => {
       const apicall = await axios(
@@ -743,17 +740,15 @@ const LandingScreen = (props) => {
 
     getdata();
   }, []);
-  // console.log("JsonResult", jsonResult);
 
   let windowsid = jsonResult.filter((e) => e.id === tourcng);
   const tourId = windowsid[0];
   let prodata = tourId === undefined ? "" : tourId.windows;
   let resultdata = tourId === undefined ? "" : prodata[0].windowId;
   player = resultdata;
-  // console.log("color", prodata)
 
   const api = `https://fortniteapi.io/v1/events/window?windowId=${player}`;
-  // console.log("api", api)
+  
   useEffect(() => {
     axios(api, {
       method: "GET",
@@ -784,7 +779,6 @@ const LandingScreen = (props) => {
       });
   }, [player]);
 
-  // console.log("slice data", apifunc[0]);
   useEffect(() => {
     axios(api, {
       method: "GET",
@@ -793,8 +787,6 @@ const LandingScreen = (props) => {
       setTestPlayer([res.data.session]);
     });
   }, [player]);
-  // console.log("test", testPlayer);
-  // console.log("changetour", e)
 
   let changetour = (e) => {
     setTourcng(e.target.outerText);
@@ -807,7 +799,6 @@ const LandingScreen = (props) => {
   };
 
   let changeWindow = (e) => {
-    // console.log('changeWindow', e.target.outerText)
     setTour(e.target.outerText);
     setWindowcng(e.target.outerText);
     setWindowchange(true);
@@ -866,10 +857,6 @@ const LandingScreen = (props) => {
     setPlayerslistdata(data);
   };
 
-  // console.log("supaData", supaData);
-  // console.log("tourlistData", tourlistData);
-  // console.log("playerslistData", playerslistData);
-
   useEffect(() => {
     getSupadata();
     gettourlist();
@@ -919,39 +906,6 @@ const LandingScreen = (props) => {
     console.log("playerlist error", error);
   };
 
-  // const allplayername = async () => {
-  //   apifunc.map(async (e, i) => {
-  //     const { data, error } = await supabase
-  //       .from("allplayerslist")
-  //       .insert({
-  //         playername: e.teamAccountNames[0].name,
-  //         price: 0,
-  //         pointsearned: e.pointsEarned,
-  //         // eventid: 1,
-  //         createddate: new Date(),
-  //         modifieddate: new Date(),
-  //       })
-  //     console.log("supabase", e.teamAccountNames[0].name)
-  //     return e
-  //   })
-  //   console.log("playerlist error", error)
-  // }
-
-  // newLogic.map(async (e, i) => {
-  //   console.log('newlogic console...',e)
-  //   const { data, error } = await supabase.from("allplayerslist").insert({
-  //     playername: e.teamAccountNames[0].name,
-  //     price: 0,
-  //     pointsearned: e.pointsEarned,
-  //     // eventid: 1,
-  //     createddate: new Date(),
-  //     modifieddate: new Date(),
-  //   });
-  //   console.log("supabase", e.teamAccountNames[0].name);
-  //   return e;
-  // });
-  // console.log("playerlist error", error)
-
   let PlayerNum = () => {
     // tournamentlistSupabase();
     // eventslistSupabase();
@@ -975,15 +929,7 @@ const LandingScreen = (props) => {
       );
     });
   };
-  // console.log("apiplayers", tour);
-  // var globTime = new Date("April 1, 2023");
-  // console.log("newDate()=>", globTime);
-  // var datematch=tourlistData[1].enddate==globTime
-  // console.log("update date",datematch)
-  useEffect(async () => {
-    // setInterval(() =>
-    // ,5000)
-  }, []);
+  
 
   const t = new Date();
   const date = ("0" + t.getDate()).slice(-2);
@@ -1048,13 +994,6 @@ const LandingScreen = (props) => {
           var name2 = res.data.session.results[index].teamAccountNames[1].name;
           var combineName = name1 + " & " + name2;
           console.log("combine name", combineName);
-          // Playersdatas.map((element) => {
-          //   if(element.name === combineName){
-          //     element.score += response.data.session.results[index].pointsEarned
-          //   }
-          // })
-          // Playersdatas.push({ name: name1 + " & "+ name2 , price: '5', score: response.data.session.results[index].pointsEarned })
-          //  console.log("data", Playersdatas);
         }
       }
     });
@@ -1063,16 +1002,10 @@ const LandingScreen = (props) => {
   
 
   let clicktoUpdate = (e) => {
-    // console.log("ID", e);
     setId(e.id)
-    // console.log("input value",updateprice)
-   
-
   };
 
   let priceChange=(e)=>{
-// console.log("price change",e)
-// console.log("priceID",id)
 setUpdatePrice(e.target.innerText)
 let priceFunc = async () => {
   const { error } = await supabase
@@ -1082,9 +1015,6 @@ let priceFunc = async () => {
 };
 priceFunc();
   }
-
-  // console.log('event list fetching...',eventLogic[0])
-  // console.log('fetching...',newLogic)
 
   let changeScore = async () => {
     tourlistData.map((e, i) => {
@@ -1109,24 +1039,16 @@ priceFunc();
         func();
       }
 
-      // eventLogic.map((e, i) => {});
 
       return <></>;
     });
-    //   const { error } = await supabase
-    // .from('eventslist')
-    // .update({ plyarsnumber: 101 })
-    // .eq('id', 1)
-    // .select()
   };
   useEffect(() => {
     changeScore();
   }, [tourlistData]);
-  // console.log("new event list", result);
-  // console.log("player list old",apifunc)
-  let Showme=()=>{
-    setShowPrice(true)
-  }
+  // let Showme=()=>{
+  //   setShowPrice(true)
+  // }
 
   const inputchange=(e)=>{
     console.log("events",e)
@@ -1447,38 +1369,8 @@ priceFunc();
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {/* {
-                                    testPlayer.map((e, i) => {
-                                      return (
-                                        <>
-                                          <tr key={i + 1}>
-                                            <th scope="row">{i + 1}</th>
-                                            <td>{e.windowId}</td>
-                                            <td>{e.eventId}</td>
-                                            <td>{player_num}</td>
-                                            <td>{e.beginTime}</td>
-                                            <td>{e.endTime}</td>
-                                            <td>Created date</td>
-                                            <td>Modified date</td>
-                                          </tr>
-                                        </>
-                                      )
-                                    })
-                                  } */}
-
+                                 
                                   {tourlistData.map((e, i) => {
-                                    // const updateplayer = e.enddate;
-                                    // const comparedate=new date()
-                                    // console.log("watch date",time>e.enddate)
-
-                                    //  if(time<e.enddate){
-                                    //   changeScore()
-                                    //  }
-                                    //  else{
-                                    //   console.log("Cancel!")
-                                    //  }
-                                    //   console.log("globdate", updateplayer,time);
-
                                     return (
                                       <>
                                         <tr key={i + 1}>
@@ -1530,16 +1422,7 @@ priceFunc();
                                   {playerslistData
                                     // .slice(start, player_num)
                                     .map((e, i) => {
-                                      console.log("playerlistmap", e.id);
-                                      // createddate: "2023-04-26";
-                                      // eventId: 1;
-                                      // id: 1401;
-                                      // modifieddate: "2023-04-26";
-                                      // playername: "асоrn";
-                                      // pointsearned: 421;
-                                      // price: 0;
-
-                                      return (
+                                     return (
                                         <>
                                           <tr key={i + 1}>
                                             <th scope="row">{i + 1}</th>
@@ -1550,33 +1433,6 @@ priceFunc();
                                             >
                                               {e.price} 
                                             </td>
-                                            {/* <td onClick={Showme}>
-                                            <input
-                                                  type="text"
-                                                  className="form-control w-25 text-center"
-                                                  value={updateprice}
-                                                  onClick={()=>clicktoUpdate(e.id)}
-                                                  onChange={priceChange}
-                                                ></input>
-                                            </td> */}
-                                            {/* {
-                                              ShowPrice?<td>
-
-                                              </td>:''
-                                            } */}
-                                            {/* {
-                                              !ShowPrice?<td>
-                                              <input
-                                                  type="text"
-                                                  className="form-control w-25 text-center"
-                                                  value={updateprice}
-                                                  onClick={() =>
-                                                    clicktoUpdate(e.id)
-                                                  }
-                                                  onChange={(e)=>setUpdatePrice(e.target.value)}
-                                                ></input>
-                                              </td>:''
-                                            } */}
                                             <td>{e.pointsearned}</td>
                                             <td>{e.eventID}</td>
                                             <td>{e.createddate}</td>
