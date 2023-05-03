@@ -692,6 +692,7 @@ const LandingScreen = (props) => {
   const [inptempty, setInptempty] = useState(false);
   let [playerslistData, setPlayerslistdata] = useState([]);
   const [updateprice, setUpdatePrice] = useState('');
+  const [id,setId]=useState('')
   const [ShowPrice,setShowPrice]=useState(false)
   const [home_List, setHome_List] = useState(true);
   const [tour_List, setTour_List] = useState(false);
@@ -1062,21 +1063,24 @@ const LandingScreen = (props) => {
   
 
   let clicktoUpdate = (e) => {
-    console.log("ID", e);
-    console.log("input value",updateprice)
-    let priceFunc = async () => {
-      const { error } = await supabase
-        .from("allplayerslist")
-        .update({ price: updateprice})
-        .eq("id",e.id );
-    };
-    priceFunc();
+    // console.log("ID", e);
+    setId(e.id)
+    // console.log("input value",updateprice)
+   
 
   };
 
   let priceChange=(e)=>{
-console.log("price change",e)
-setUpdatePrice(e.target.value)
+// console.log("price change",e)
+// console.log("priceID",id)
+setUpdatePrice(e.target.innerText)
+let priceFunc = async () => {
+  const { error } = await supabase
+    .from("allplayerslist")
+    .update({ price: updateprice})
+    .eq("id",id );
+};
+priceFunc();
   }
 
   // console.log('event list fetching...',eventLogic[0])
@@ -1540,7 +1544,12 @@ setUpdatePrice(e.target.value)
                                           <tr key={i + 1}>
                                             <th scope="row">{i + 1}</th>
                                             <td>{e.playername}</td>
-                                            <td contentEditable={true} onClick={()=>clicktoUpdate(e)} onInput={inputchange}>{e.price}</td>
+                                            <td contentEditable={true} onClick={()=>clicktoUpdate(e)} 
+                                            // onInput={inputchange}
+                                            onKeyUp={priceChange}
+                                            >
+                                              {e.price} 
+                                            </td>
                                             {/* <td onClick={Showme}>
                                             <input
                                                   type="text"
