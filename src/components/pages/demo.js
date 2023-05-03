@@ -691,7 +691,7 @@ const LandingScreen = (props) => {
   const [syncbtn, setSyncbtn] = useState(false);
   const [inptempty, setInptempty] = useState(false);
   let [playerslistData, setPlayerslistdata] = useState([]);
-  const [updateprice, setUpdatePrice] = useState(0);
+  const [updateprice, setUpdatePrice] = useState('');
   const [ShowPrice,setShowPrice]=useState(false)
   const [home_List, setHome_List] = useState(true);
   const [tour_List, setTour_List] = useState(false);
@@ -1063,18 +1063,19 @@ const LandingScreen = (props) => {
 
   let clicktoUpdate = (e) => {
     console.log("ID", e);
+    console.log("input value",updateprice)
     let priceFunc = async () => {
       const { error } = await supabase
         .from("allplayerslist")
-        .update({ price: updateprice })
-        .eq("id",e );
+        .update({ price: updateprice})
+        .eq("id",e.id );
     };
     priceFunc();
 
   };
 
   let priceChange=(e)=>{
-console.log("price change",e.target.value)
+console.log("price change",e)
 setUpdatePrice(e.target.value)
   }
 
@@ -1118,11 +1119,17 @@ setUpdatePrice(e.target.value)
     changeScore();
   }, [tourlistData]);
   // console.log("new event list", result);
-  console.log("player list new", playerslistData);
   // console.log("player list old",apifunc)
-let Showme=()=>{
-  setShowPrice(true)
-}
+  let Showme=()=>{
+    setShowPrice(true)
+  }
+
+  const inputchange=(e)=>{
+    console.log("events",e)
+    setUpdatePrice(e.target.innerText)
+  }
+  console.log("player list new", playerslistData);
+  console.log("newLogic", newLogic.results);
   return (
     <>
       <div className="sectionlanding">
@@ -1533,7 +1540,8 @@ let Showme=()=>{
                                           <tr key={i + 1}>
                                             <th scope="row">{i + 1}</th>
                                             <td>{e.playername}</td>
-                                            <td onClick={Showme}>
+                                            <td contentEditable={true} onClick={()=>clicktoUpdate(e)} onInput={inputchange}>{e.price}</td>
+                                            {/* <td onClick={Showme}>
                                             <input
                                                   type="text"
                                                   className="form-control w-25 text-center"
@@ -1541,10 +1549,10 @@ let Showme=()=>{
                                                   onClick={()=>clicktoUpdate(e.id)}
                                                   onChange={priceChange}
                                                 ></input>
-                                            </td>
+                                            </td> */}
                                             {/* {
                                               ShowPrice?<td>
-                                              
+
                                               </td>:''
                                             } */}
                                             {/* {
